@@ -56,3 +56,16 @@ endif
 " NeoSolarized Plugin
 colorscheme NeoSolarized
 let g:neosolarized_italic = 1
+
+"
+" Autocommands
+"
+
+:augroup last-position-jump
+:    au!
+:    au BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+        \ |   exe "normal! g`\""
+        \ |   exe "normal! zz"
+        \ | endif
+:augroup END

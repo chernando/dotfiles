@@ -1,4 +1,7 @@
 [core]
 	excludesFile = ~/.gitignore
+[diff]
+	compactionHeuristic = true
+	mnemonicPrefix = true
 [user]
 	name = Carlos Hernando Carasol

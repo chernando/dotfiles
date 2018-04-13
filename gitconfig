@@ -1,0 +1,4 @@
+[core]
+	excludesFile = ~/.gitignore
+[user]
+	name = Carlos Hernando Carasol

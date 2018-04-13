@@ -5,15 +5,17 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    
+
 - clean: ['~']
 
 - link:
+    ~/.gitconfig:
+    ~/.gitignore:
+
     ~/.zlogin: prezto/runcoms/zlogin
     ~/.zlogout: prezto/runcoms/zlogout
     ~/.zprezto: prezto
     ~/.zpreztorc: prezto/runcoms/zpreztorc
     ~/.zprofile: prezto/runcoms/zprofile
     ~/.zshenv: prezto/runcoms/zshenv
-    ~/.zshrc: zshrc
-
+    ~/.zshrc:

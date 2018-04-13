@@ -7,3 +7,5 @@
 	prune = true
 [user]
 	name = Carlos Hernando Carasol
+[include]
+	path = ~/.gitconfig.local

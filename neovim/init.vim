@@ -35,6 +35,7 @@ if dein#load_state('~/.local/share/dein')
   call dein#add('~/.local/share/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
+  call dein#add('icymind/NeoSolarized')
 
   " Required:
   call dein#end()
@@ -51,3 +52,7 @@ if dein#check_install()
 endif
 
 "End dein Script-------------------------
+
+" NeoSolarized Plugin
+colorscheme NeoSolarized
+let g:neosolarized_italic = 1

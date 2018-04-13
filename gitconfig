@@ -3,5 +3,7 @@
 [diff]
 	compactionHeuristic = true
 	mnemonicPrefix = true
+[fetch]
+	prune = true
 [user]
 	name = Carlos Hernando Carasol

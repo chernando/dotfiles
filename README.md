@@ -10,3 +10,10 @@ git clone git@github.com:chernando/dotfiles.git
 cd dotfiles
 ./install
 ```
+
+
+## Updating
+
+```
+./update
+```

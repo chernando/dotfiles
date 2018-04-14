@@ -3,8 +3,11 @@
 [diff]
 	compactionHeuristic = true
 	mnemonicPrefix = true
+	submodule = log
 [fetch]
 	prune = true
+[status]
+	submoduleSummary = 1
 [user]
 	name = Carlos Hernando Carasol
 [include]

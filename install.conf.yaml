@@ -19,6 +19,6 @@
     ~/.zlogout: prezto/runcoms/zlogout
     ~/.zprezto: prezto
     ~/.zpreztorc: prezto/runcoms/zpreztorc
-    ~/.zprofile: prezto/runcoms/zprofile
+    ~/.zprofile:
     ~/.zshenv: prezto/runcoms/zshenv
     ~/.zshrc:

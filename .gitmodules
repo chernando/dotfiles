@@ -8,8 +8,8 @@
 	path = prezto
 	url = https://github.com/sorin-ionescu/prezto.git
 	shallow = true
-[submodule "neovim/dein.vim"]
+[submodule "neovim/minpac"]
 	ignore = dirty
-	path = neovim/dein.vim
-	url = https://github.com/Shougo/dein.vim.git
+	path = neovim/minpac
+	url = https://github.com/k-takata/minpac.git
 	shallow = true

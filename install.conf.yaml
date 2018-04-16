@@ -13,7 +13,7 @@
     ~/.gitignore:
 
     ~/.config/nvim/init.vim: neovim/init.vim
-    ~/.local/share/dein/repos/github.com/Shougo/dein.vim: neovim/dein.vim
+    ~/.config/nvim/pack/minpac/opt/minpac: neovim/minpac
 
     ~/.zlogin: prezto/runcoms/zlogin
     ~/.zlogout: prezto/runcoms/zlogout

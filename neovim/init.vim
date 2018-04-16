@@ -22,36 +22,18 @@ set et    "expand <Tab> to spaces in Insert mode
 set si    "do clever autoindenting
 
 
-"dein Script-----------------------------
-" Required:
-set runtimepath+=~/.local/share/dein/repos/github.com/Shougo/dein.vim
+"
+" minpac
+"
+packadd minpac
+call minpac#init()
 
-" Required:
-if dein#load_state('~/.local/share/dein')
-  call dein#begin('~/.local/share/dein')
+" minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
+call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-  " Let dein manage dein
-  " Required:
-  call dein#add('~/.local/share/dein/repos/github.com/Shougo/dein.vim')
+" Add other plugins here.
+call minpac#add('icymind/NeoSolarized')
 
-  " Add or remove your plugins here:
-  call dein#add('icymind/NeoSolarized')
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
-
-" Required:
-filetype plugin indent on
-syntax enable
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-"End dein Script-------------------------
 
 " NeoSolarized Plugin
 colorscheme NeoSolarized

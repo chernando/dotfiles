@@ -33,11 +33,16 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
 call minpac#add('icymind/NeoSolarized')
+call minpac#add('w0rp/ale')
 
 
 " NeoSolarized Plugin
 colorscheme NeoSolarized
 let g:neosolarized_italic = 1
+
+" Asynchronous Lint Engine Plugin
+let g:ale_sign_error = '🚫'
+let g:ale_sign_warning = '🚧'
 
 "
 " Autocommands

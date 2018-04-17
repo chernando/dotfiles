@@ -19,7 +19,6 @@ set sw=2  "number of spaces used for each step of (auto)indent
 set sts=2 "number of spaces to insert for a <Tab>
 set sr    "round to 'shiftwidth' for "<<" and ">>"
 set et    "expand <Tab> to spaces in Insert mode
-set si    "do clever autoindenting
 
 
 "
@@ -33,6 +32,7 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
 call minpac#add('icymind/NeoSolarized')
+call minpac#add('sheerun/vim-polyglot')
 call minpac#add('w0rp/ale')
 
 

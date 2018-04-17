@@ -14,9 +14,9 @@ set sm    "when inserting a bracket, briefly jump to its match
 set nojs  "use two spaces after '.' when joining a line
 
 " 14 tabs and indenting
-set ts=4  "number of spaces a <Tab> in the text stands for
-set sw=4  "number of spaces used for each step of (auto)indent
-set sts=4 "number of spaces to insert for a <Tab>
+set ts=2  "number of spaces a <Tab> in the text stands for
+set sw=2  "number of spaces used for each step of (auto)indent
+set sts=2 "number of spaces to insert for a <Tab>
 set sr    "round to 'shiftwidth' for "<<" and ">>"
 set et    "expand <Tab> to spaces in Insert mode
 set si    "do clever autoindenting

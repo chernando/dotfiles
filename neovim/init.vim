@@ -56,3 +56,8 @@ let g:ale_sign_warning = '🚧'
         \ |   exe "normal! zz"
         \ | endif
 :augroup END
+
+:augroup gitconfig
+:    au!
+:    au FileType gitconfig setlocal noet
+:augroup END

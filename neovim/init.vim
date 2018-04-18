@@ -33,6 +33,7 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 " Add other plugins here.
 call minpac#add('icymind/NeoSolarized')
 call minpac#add('sheerun/vim-polyglot')
+call minpac#add('tpope/vim-fugitive')
 call minpac#add('w0rp/ale')
 
 

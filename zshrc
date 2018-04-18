@@ -19,3 +19,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# Use ccat when available
+if [[ ! -z `which ccat` ]]; then
+  alias cat=ccat
+fi

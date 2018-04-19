@@ -11,6 +11,10 @@ cd dotfiles
 ./install
 ```
 
+### Terminal fonts
+
+Remember to install a [Nerd Font](http://nerdfonts.com/) and to config [iTerm2](https://www.iterm2.com/) for Powerline9k (Zsh prompt).
+
 
 ## Updating
 

@@ -1,2 +1,3 @@
 gitconfig linguist-language=INI
 .gitmodules linguist-language=INI
+zpreztorc linguist-language=Shell

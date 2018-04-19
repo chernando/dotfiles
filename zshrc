@@ -21,6 +21,6 @@ fi
 # Customize to your needs...
 
 # Use ccat when available
-if [[ ! -z `which ccat` ]]; then
+if (( $+commands[ccat] )); then
   alias cat=ccat
 fi

@@ -9,6 +9,9 @@ set scs   "override 'ignorecase' when pattern has upper case characters
 " 5 syntax, highlighting and spelling
 set tgc   "use GUI colors for the terminal
 
+" 8 terminal
+set title "show info in the window title
+
 " 13 editing text
 set sm    "when inserting a bracket, briefly jump to its match
 set nojs  "use two spaces after '.' when joining a line

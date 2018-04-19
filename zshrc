@@ -22,5 +22,5 @@ fi
 
 # Use ccat when available
 if (( $+commands[ccat] )); then
-  alias cat=ccat
+  alias cat='ccat -G String=teal -G Keyword=darkyellow -G Comment=standout -G Type=darkgreen -G Literal=darkgreen -G Punctuation=reset -G Plaintext=reset -G Tag=darkblue -G HTMLTag=darkblue -G Decimal=teal'
 fi

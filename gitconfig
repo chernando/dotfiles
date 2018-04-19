@@ -6,6 +6,8 @@
 	submodule = log
 [fetch]
 	prune = true
+[pull]
+	rebase = true
 [status]
 	submoduleSummary = 1
 [user]

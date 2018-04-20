@@ -2,6 +2,10 @@
 
 My personal dotfiles, use with care :wink:
 
+![Shell example]( ./.assets/shell.png)
+
+![Neovim example]( ./.assets/neovim.png)
+
 
 ## Installing
 

@@ -8,6 +8,8 @@
 	prune = true
 [pull]
 	rebase = true
+[push]
+	default = current
 [status]
 	submoduleSummary = 1
 [user]

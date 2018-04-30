@@ -24,3 +24,8 @@ fi
 if (( $+commands[ccat] )); then
   alias cat='ccat -G String=teal -G Keyword=darkyellow -G Comment=standout -G Type=darkgreen -G Literal=darkgreen -G Punctuation=reset -G Plaintext=reset -G Tag=darkblue -G HTMLTag=darkblue -G Decimal=teal'
 fi
+
+# Google Cloud SDK
+if [[ -r  '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]]; then
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+fi

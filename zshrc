@@ -29,3 +29,8 @@ fi
 if [[ -r  '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]]; then
   source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 fi
+
+# Serverless framework
+if [[ -r '/usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh' ]]; then
+  source /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+fi

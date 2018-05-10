@@ -62,6 +62,7 @@ fi
 #
 # Homebrew
 #
+
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_UPGRADE_CLEANUP=1
@@ -77,3 +78,10 @@ export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs status)
 export POWERLEVEL9K_SHORTEN_DELIMITER=""
 export POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 export POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+#
+# Node
+#
+
+# Node 10  is extreme with ExperimentalWarning
+export NODE_NO_WARNINGS=1

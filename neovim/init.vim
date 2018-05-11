@@ -7,7 +7,8 @@ set ic    "ignore case when using a search pattern
 set scs   "override 'ignorecase' when pattern has upper case characters
 
 " 5 syntax, highlighting and spelling
-set tgc   "use GUI colors for the terminal
+set tgc       "use GUI colors for the terminal
+set spl=en_us "list of accepted languages
 
 " 8 terminal
 set title "show info in the window title

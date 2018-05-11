@@ -34,11 +34,15 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
+call minpac#add('Shougo/deoplete.nvim')
 call minpac#add('icymind/NeoSolarized')
 call minpac#add('sheerun/vim-polyglot')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('w0rp/ale')
 
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
 
 " NeoSolarized Plugin
 colorscheme NeoSolarized

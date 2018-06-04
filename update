@@ -1,3 +1,11 @@
 #!/bin/sh
 
+# Update dotfiles submodules
 git submodule update --remote --merge
+
+# Update system
+brew update
+brew upgrade
+npm -g upgrade
+pip3 list -o
+brew cask outdated

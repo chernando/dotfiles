@@ -10,7 +10,7 @@ My personal dotfiles, use with care :wink:
 ## Installing
 
 ```
-git clone --depth 1 git@github.com:chernando/dotfiles.git
+git clone --recursive git@github.com:chernando/dotfiles.git
 cd dotfiles
 ./install
 ```

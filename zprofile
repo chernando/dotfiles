@@ -86,3 +86,9 @@ export POWERLEVEL9K_STATUS_SHOW_PIPESTATUS=false
 
 # Node 10  is extreme with ExperimentalWarning
 export NODE_NO_WARNINGS=1
+
+#
+# Python
+#
+
+export PIPENV_VENV_IN_PROJECT=1

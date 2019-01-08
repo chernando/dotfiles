@@ -81,13 +81,6 @@ export POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 export POWERLEVEL9K_STATUS_SHOW_PIPESTATUS=false
 
 #
-# Node
-#
-
-# Node 10  is extreme with ExperimentalWarning
-export NODE_NO_WARNINGS=1
-
-#
 # Python
 #
 

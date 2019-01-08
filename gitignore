@@ -14,6 +14,8 @@ Session.vim
 *~
 # Auto-generated tag files
 tags
+# Persistent undo
+[._]*.un~
 
 
 # https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore

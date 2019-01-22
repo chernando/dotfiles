@@ -65,7 +65,7 @@ fi
 
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_UPGRADE_CLEANUP=1
+export HOMEBREW_INSTALL_CLEANUP=1
 
 #
 # Powerlevel9k

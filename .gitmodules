@@ -2,11 +2,14 @@
 	ignore = dirty
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot.git
+	branch = master
 [submodule "prezto"]
 	ignore = dirty
 	path = prezto
 	url = https://github.com/sorin-ionescu/prezto.git
+	branch = master
 [submodule "neovim/minpac"]
 	ignore = dirty
 	path = neovim/minpac
 	url = https://github.com/k-takata/minpac.git
+	branch = master

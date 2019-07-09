@@ -1,11 +1,7 @@
 #!/bin/sh
 
 # Update dotfiles submodules
-git submodule foreach git pull origin master
+git submodule update --remote
+git commit -m 'Modules updated' `git submodule | cut -d ' ' -f 3`
 
-# Update system
-brew update
-brew upgrade
-npm -g upgrade
-pip3 list -o
-brew cask outdated
+git submodule update --init --recursive

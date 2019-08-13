@@ -36,19 +36,18 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
-call minpac#add('Shougo/deoplete.nvim')
-call minpac#add('icymind/NeoSolarized')
-call minpac#add('sheerun/vim-polyglot')
+call minpac#add('lifepillar/vim-solarized8')
 call minpac#add('tpope/vim-fugitive')
-call minpac#add('w0rp/ale')
+call minpac#add('dense-analysis/ale')
+call minpac#add('Shougo/deoplete.nvim')
+call minpac#add('sheerun/vim-polyglot')
 
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 
-" NeoSolarized Plugin
-colorscheme NeoSolarized
-let g:neosolarized_italic = 1
+" Solarized 8 Plugin
+colorscheme solarized8_flat
 
 " Asynchronous Lint Engine Plugin
 let g:ale_sign_error = '🚫'

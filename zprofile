@@ -63,9 +63,10 @@ fi
 # Homebrew
 #
 
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
-export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_CASK_OPTS='--appdir=~/Applications --require-sha'
 export HOMEBREW_INSTALL_CLEANUP=1
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSECURE_REDIRECT=1
 
 #
 # Powerlevel9k

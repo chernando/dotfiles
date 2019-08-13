@@ -85,3 +85,11 @@ export POWERLEVEL9K_SHORTEN_STRATEGY='truncate_from_right'
 #
 
 export PIPENV_VENV_IN_PROJECT=1
+
+#
+# Custom
+#
+
+if [[ -s "${ZDOTDIR:-$HOME}/.zprofile.local" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprofile.local"
+fi

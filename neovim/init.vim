@@ -25,6 +25,8 @@ set sts=2 "number of spaces to insert for a <Tab>
 set sr    "round to 'shiftwidth' for "<<" and ">>"
 set et    "expand <Tab> to spaces in Insert mode
 
+" 22 running make and jumping to errors
+set gp=rg\ --vimgrep
 
 "
 " minpac

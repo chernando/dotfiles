@@ -14,12 +14,12 @@ if (( $+commands[ccat] )); then
   alias cat='ccat -G String=teal -G Keyword=darkyellow -G Comment=standout -G Type=darkgreen -G Literal=darkgreen -G Punctuation=reset -G Plaintext=reset -G Tag=darkblue -G HTMLTag=darkblue -G Decimal=teal'
 fi
 
-# Google Cloud SDK
-if [[ -r  '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]]; then
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
-fi
-
-# Serverless framework
-if [[ -r '/usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh' ]]; then
-  source /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
-fi
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/chernando/Work/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/chernando/Work/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/chernando/Work/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/chernando/Work/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/chernando/Work/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/chernando/Work/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh

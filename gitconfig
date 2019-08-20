@@ -12,5 +12,6 @@
 	submoduleSummary = 1
 [user]
 	name = Carlos Hernando Carasol
+	email = 301211+chernando@users.noreply.github.com
 [include]
 	path = ~/.gitconfig.local

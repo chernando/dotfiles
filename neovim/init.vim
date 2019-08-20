@@ -41,6 +41,8 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('lifepillar/vim-solarized8')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('dense-analysis/ale')
+call minpac#add('sirver/UltiSnips')
+call minpac#add('honza/vim-snippets')
 call minpac#add('Shougo/deoplete.nvim')
 call minpac#add('sheerun/vim-polyglot')
 

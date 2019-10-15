@@ -56,6 +56,8 @@ colorscheme solarized8_flat
 " Asynchronous Lint Engine Plugin
 let g:ale_sign_error = '🚫'
 let g:ale_sign_warning = '🚧'
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
 
 "
 " Autocommands

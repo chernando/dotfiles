@@ -20,3 +20,5 @@
     ~/.zprofile:
     ~/.zshenv: prezto/runcoms/zshenv
     ~/.zshrc:
+
+    ~/.p10k.zsh:

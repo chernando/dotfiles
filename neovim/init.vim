@@ -235,3 +235,8 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 :    au!
 :    au FileType gitconfig setlocal noet
 :augroup END
+
+:augroup gitconfig
+:    au!
+:    au BufNewFile,BufRead *.vtl set ft=velocity
+:augroup END

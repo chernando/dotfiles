@@ -15,3 +15,5 @@
 	email = 301211+chernando@users.noreply.github.com
 [include]
 	path = ~/.gitconfig.local
+[init]
+	defaultBranch = main

@@ -9,6 +9,8 @@
     ~/.gitconfig:
     ~/.gitignore:
 
+    ~/.ssh/config: ssh_config
+
     ~/.config/nvim/init.vim: neovim/init.vim
     ~/.vimrc: neovim/vimrc
 

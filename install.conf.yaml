@@ -11,8 +11,8 @@
 
     ~/.ssh/config: ssh_config
 
-    ~/.config/nvim/init.vim: neovim/init.vim
-    ~/.vimrc: neovim/vimrc
+    ~/.config/nvim/init.lua: neovim/init.lua
+    ~/.config/nvim/lua: neovim/lua
 
     ~/.zlogin: prezto/runcoms/zlogin
     ~/.zlogout: prezto/runcoms/zlogout
@@ -25,5 +25,5 @@
     ~/.p10k.zsh:
 
 - shell:
-  - sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  - nvim --headless +'PlugUpdate --sync' +qall
+  - git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim || echo 'ignore'
+  - nvim --headless +'PackerSync' +qall

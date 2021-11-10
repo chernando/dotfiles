@@ -22,3 +22,9 @@ vim.cmd [[
 :augroup END
 ]]
 
+-- inoremap <C-U> <C-G>u<C-U>
+-- nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+vim.api.nvim_set_keymap('n', 'Y', 'y$', {})
+-- nnoremap <C-L> <Cmd>nohlsearch<Bar>diffupdate<CR><C-L>
+-- inoremap <C-U> <C-G>u<C-U>
+-- inoremap <C-W> <C-G>u<C-W>

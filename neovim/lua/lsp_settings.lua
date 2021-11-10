@@ -40,7 +40,7 @@ local servers = {
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-    -- on_attach = my_custom_on_attach,
+    on_attach = on_attach,
     capabilities = capabilities,
   }
 end

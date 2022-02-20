@@ -1,6 +1,6 @@
 require('plugins')
 
-require('defaults2')
+-- require('defaults2')
 local opt = vim.opt
 
 -- 2 moving around, searching and patterns
@@ -8,7 +8,7 @@ opt.incsearch = true      -- ignore case when using a search pattern
 opt.smartcase = true      -- override 'ignorecase' when pattern has upper case characters
 
 -- 5 syntax, highlighting and spelling
-opt.background = 'light'  -- the background color brightness
+opt.background = 'dark'  -- the background color brightness
 opt.termguicolors = true  -- use GUI colors for the terminal
 
 -- 8 terminal
@@ -37,9 +37,15 @@ opt.pyxversion = 3        -- whether to use Python 2 or 3
 
 vim.cmd('colorscheme solarized8_flat')
 
-require('treesitter_settings')
-require('lsp_settings')
+--Remap space as leader key
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+require('lualine_settings')
+require('Comment').setup()
 require('gitsigns_settings')
 require('telescope_settings')
-require('lightline_settings')
-
+require('treesitter_settings')
+require('lsp_settings')
+require('cmp_settings')

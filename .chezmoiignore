@@ -1,0 +1,6 @@
+.gitattributes
+.github/
+README.md
+{{- if eq .chezmoi.os "darwin" }}
+bin
+{{- end }}

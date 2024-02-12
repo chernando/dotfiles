@@ -1,0 +1,54 @@
+[".zprezto"]
+    type = "git-repo"
+    url = "https://github.com/sorin-ionescu/prezto.git"
+    refreshPeriod = "168h"
+    [".zprezto".clone]
+        args = ["--recursive", "--depth=1"]
+    [".zprezto".pull]
+        args = ["--recurse-submodules=on-demand"]
+
+[".config/nvim"]
+    type = "archive"
+    url = "https://github.com/NvChad/NvChad/archive/refs/heads/v2.0.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+
+[".pyenv"]
+    type = "git-repo"
+    url = "https://github.com/pyenv/pyenv.git"
+    refreshPeriod = "168h"
+
+{{- if eq .chezmoi.os "darwin" }}
+["Library/Fonts"]
+{{ else }}
+[".local/share/fonts"]
+{{- end }}
+    type = "archive"
+    url = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IntelOneMono.tar.xz"
+    include = [ "Intone*" ]
+    refreshPeriod = "168h"
+
+{{- if eq .chezmoi.os "linux" }}
+["bin/fnm"]
+    type = "archive-file"
+    url = "https://github.com/Schniz/fnm/releases/latest/download/fnm-linux.zip"
+    path = "fnm"
+    refreshPeriod = "168h"
+    executable = true
+
+# TODO: not supported
+# ["bin/tree-sitter"]
+#     type = "archive-file"
+#     url = "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz"
+#     format = "gzip"
+#     path = "tree-sitter-linux-x64"
+#     refreshPeriod = "168h"
+#     executable = true
+
+["bin/nvim"]
+    type = "file"
+    url = "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    refreshPeriod = "168h"
+    executable = true
+{{- end }}

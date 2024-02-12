@@ -1,0 +1,40 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "linux" -}}
+sudo apt install \
+	bat \
+	fd-find \
+	gcc \
+	gh \
+	jq \
+	lsd \
+	make \
+	podman \
+	ripgrep \
+	wl-clipboard
+
+flatpak install flathub com.jgraph.drawio.desktop
+flatpak install flathub org.gimp.GIMP
+flatpak install flathub io.podman_desktop.PodmanDesktop
+
+{{ else if eq .chezmoi.os "darwin" -}}
+brew bundle --no-lock --file=/dev/stdin <<EOF
+brew "awscli"
+brew "bat"
+brew "fd"
+brew "fnm"
+brew "gh"
+brew "jq"
+brew "neovim"
+brew "podman"
+brew "ripgrep"
+brew "tree-sitter"
+brew "watchman"
+cask "drawio", args: { appdir: "~/Applications" }
+cask "gimp", args: { appdir: "~/Applications" }
+cask "iterm2", args: { appdir: "~/Applications" }
+cask "notion", args: { appdir: "~/Applications" }
+cask "podman-desktop", args: { appdir: "~/Applications" }
+EOF
+
+{{ end -}}

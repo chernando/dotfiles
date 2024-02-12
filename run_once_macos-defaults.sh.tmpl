@@ -1,0 +1,47 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# Ref: https://macos-defaults.com/
+
+#
+# Dock
+#
+
+# Set Position to right
+defaults write com.apple.dock "orientation" -string "right" && killall Dock
+
+# Activate Autohide
+defaults write com.apple.dock "autohide" -bool "true" && killall dock
+
+# Don't show Recent Apps
+defaults write com.apple.dock "show-recents" -bool "false" && killall dock
+
+#
+# Screenshots
+#
+
+# Set location ~/Downloads/
+defaults write com.apple.screencapture "location" -string "~/Downloads" && killall SystemUIServer
+
+#
+# Finder
+#
+
+# Set Column view as default
+defaults write com.apple.finder "FXPreferredViewStyle" -string "clmv" && killall Finder
+
+# Keep folders on top
+defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true" && killall finder
+
+# Don't display file extension warning
+defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false" && killall Finder
+
+
+#
+# Desktop
+#
+
+# Hide all icons
+defaults write com.apple.finder "CreateDesktop" -bool "false" && killall finder
+
+{{ end -}}

@@ -1,0 +1,5 @@
+*		text=auto
+
+.chezmoiignore	linguist-language=Ignore
+dot_z*		linguist-language=Shell
+*.sh.tmpl	linguist-language=Shell

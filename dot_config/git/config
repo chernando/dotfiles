@@ -1,6 +1,15 @@
 [branch]
 	sort = -committerdate
 
+[core]
+  pager = delta
+
+[delta]
+  side-by-side = true
+  navigate = true
+  true-color = always
+  syntax-theme = Solarized (dark)
+
 [gpg]
 	format = ssh
 
@@ -9,6 +18,12 @@
 
 [init]
 	defaultBranch = main
+
+[interactive]
+  diffFilter = delta --color-only
+
+[merge]
+  conflictstyle = diff3
 
 [rerere]
 	autoUpdate = true
@@ -21,3 +36,7 @@
 	name = Carlos Hernando Carasol
 	email = chernando@users.noreply.github.com
 	signingKey = ~/.ssh/id_ed25519.pub
+
+
+
+

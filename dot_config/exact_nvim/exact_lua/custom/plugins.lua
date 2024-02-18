@@ -27,6 +27,14 @@ local plugins = {
     "nvim-tree/nvim-tree.lua",
     opts = overrides.nvimtree,
   },
+
+  -- Install plugins
+  {
+    "stevearc/conform.nvim",
+    config = function()
+      require "custom.configs.conform"
+    end,
+  },
 }
 
 return plugins

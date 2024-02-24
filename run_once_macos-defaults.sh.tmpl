@@ -8,13 +8,13 @@
 #
 
 # Set Position to right
-defaults write com.apple.dock "orientation" -string "right" && killall Dock
+defaults write com.apple.dock "orientation" -string "left" && killall Dock
 
 # Activate Autohide
-defaults write com.apple.dock "autohide" -bool "true" && killall dock
+defaults write com.apple.dock "autohide" -bool "true" && killall Dock
 
 # Don't show Recent Apps
-defaults write com.apple.dock "show-recents" -bool "false" && killall dock
+defaults write com.apple.dock "show-recents" -bool "false" && killall Dock
 
 #
 # Screenshots
@@ -31,7 +31,7 @@ defaults write com.apple.screencapture "location" -string "~/Downloads" && killa
 defaults write com.apple.finder "FXPreferredViewStyle" -string "clmv" && killall Finder
 
 # Keep folders on top
-defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true" && killall finder
+defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true" && killall Finder
 
 # Don't display file extension warning
 defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false" && killall Finder
@@ -42,6 +42,6 @@ defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false" &
 #
 
 # Hide all icons
-defaults write com.apple.finder "CreateDesktop" -bool "false" && killall finder
+defaults write com.apple.finder "CreateDesktop" -bool "false" && killall Finder
 
 {{ end -}}

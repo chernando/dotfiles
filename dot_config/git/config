@@ -1,5 +1,5 @@
 [branch]
-	sort = -committerdate
+  sort = -committerdate
 
 [core]
   pager = delta
@@ -11,13 +11,10 @@
   syntax-theme = Solarized (dark)
 
 [gpg]
-	format = ssh
-
-[include]
-	path = ~/.gitconfig.local
+  format = ssh
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
 
 [interactive]
   diffFilter = delta --color-only
@@ -26,17 +23,16 @@
   conflictstyle = diff3
 
 [rerere]
-	autoUpdate = true
-	enabled = true
+  autoUpdate = true
+  enabled = true
 
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 
 [user]
-	name = Carlos Hernando Carasol
-	email = chernando@users.noreply.github.com
-	signingKey = ~/.ssh/id_ed25519.pub
+  name = Carlos Hernando Carasol
+  email = chernando@users.noreply.github.com
+  signingKey = ~/.ssh/id_ed25519.pub
 
-
-
-
+[include]
+  path = ~/.gitconfig.local

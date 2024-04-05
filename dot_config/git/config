@@ -4,12 +4,6 @@
 [core]
   pager = delta
 
-[delta]
-  side-by-side = true
-  navigate = true
-  true-color = always
-  syntax-theme = Solarized (dark)
-
 [gpg]
   format = ssh
 
@@ -36,3 +30,10 @@
 
 [include]
   path = ~/.gitconfig.local
+  path = ~/.config/delta/themes/catppuccin.gitconfig
+
+[delta]
+  side-by-side = true
+  navigate = true
+  true-color = always
+  features = catppuccin-macchiato

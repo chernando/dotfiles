@@ -11,24 +11,6 @@ if [[ -z "$BROWSER" && "$OSTYPE" == darwin* ]]; then
 fi
 
 #
-# Editors
-#
-
-# Check if nvim is a valid executable
-if (( $+commands[nvim] )) then
-  export EDITOR='nvim'
-  export VISUAL='nvim'
-else
-  # Fallback to another editor (e.g., vim, nano, etc.) if nvim is not available
-  export EDITOR='vim'
-  export VISUAL='vim'
-fi
-
-if [[ -z "$PAGER" ]]; then
-  export PAGER='less'
-fi
-
-#
 # Language
 #
 
@@ -56,6 +38,29 @@ path=(
   /usr/local/{,s}bin(N)
   $path
 )
+
+fpath=(
+  /opt/homebrew/share/zsh/site-functions
+  $fpath
+)
+
+#
+# Editors
+#
+
+# Check if nvim is a valid executable
+if (( $+commands[nvim] )) then
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+else
+  # Fallback to another editor (e.g., vim, nano, etc.) if nvim is not available
+  export EDITOR='vim'
+  export VISUAL='vim'
+fi
+
+if [[ -z "$PAGER" ]]; then
+  export PAGER='less'
+fi
 
 #
 # Less

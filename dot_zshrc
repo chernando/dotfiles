@@ -35,5 +35,9 @@ if (( $+commands[fnm] )); then
   eval "$(fnm env --use-on-cd)"
 fi
 
+if (( $+commands[rg] )); then
+  alias grep='rg'
+fi
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

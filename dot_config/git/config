@@ -24,7 +24,7 @@
   autoSetupRemote = true
 
 [user]
-  name = Carlos Hernando Carasol
+  name = Carlos Hernando
   email = chernando@users.noreply.github.com
   signingKey = ~/.ssh/id_ed25519.pub
 
@@ -36,4 +36,4 @@
   side-by-side = true
   navigate = true
   true-color = always
-  features = catppuccin-macchiato
+  features = catppuccin-latte

@@ -5,10 +5,10 @@
 local M = {}
 
 M.ui = {
-  theme = "catppuccin",
+  theme = "github_light",
 
   changed_themes = {
-    catppuccin = {
+    github_light = {
       base_30 = {
         grey_fg = "#8087a2"
       },

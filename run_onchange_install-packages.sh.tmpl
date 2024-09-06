@@ -21,21 +21,26 @@ flatpak install flathub io.podman_desktop.PodmanDesktop
 brew bundle --no-lock --file=/dev/stdin <<EOF
 brew "awscli"
 brew "bat"
+brew "bat-extras"
+brew "dust"
 brew "fd"
 brew "fnm"
 brew "gh"
 brew "git-delta"
 brew "jq"
+brew "lsd"
 brew "neovim"
 brew "podman"
 brew "ripgrep"
 brew "tree-sitter"
 brew "watchman"
+brew "zellij"
 cask "drawio", args: { appdir: "~/Applications" }
 cask "gimp", args: { appdir: "~/Applications" }
 cask "iterm2", args: { appdir: "~/Applications" }
 cask "notion", args: { appdir: "~/Applications" }
 cask "podman-desktop", args: { appdir: "~/Applications" }
+cask "rectangle", args: { appdir: "~/Applications" }
 EOF
 
 {{ end -}}

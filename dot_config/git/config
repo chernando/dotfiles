@@ -37,3 +37,6 @@
   navigate = true
   true-color = always
   features = catppuccin-latte
+
+[pull]
+	rebase = true

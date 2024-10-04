@@ -10,7 +10,7 @@ local servers = {
   "cssls",
   "html",
   "pyright",
-  "tsserver",
+  "ts_ls",
 }
 
 -- lsps with default config

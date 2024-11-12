@@ -30,13 +30,11 @@
 
 [include]
   path = ~/.gitconfig.local
-  path = ~/.config/delta/themes/catppuccin.gitconfig
 
 [delta]
   side-by-side = true
   navigate = true
   true-color = always
-  features = catppuccin-latte
 
 [pull]
 	rebase = true

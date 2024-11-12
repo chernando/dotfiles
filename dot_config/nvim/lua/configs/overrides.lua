@@ -1,106 +1,132 @@
 local M = {}
 
 M.conform = {
-  formatters_by_ft = {
-    css = { "prettier" },
-    graphql = { "prettier" },
-    handlebars = { "prettier" },
-    html = { "prettier" },
-    javascript = { "prettier" },
-    javascriptreact = { "prettier" },
-    jsonc = { "prettier" },
-    json = { "prettier" },
-    less = { "prettier" },
-    lua = { "stylua" },
-    ["markdown.mdx"] = { "prettier" },
-    markdown = { "prettier" },
-    python = { "black" },
-    scss = { "prettier" },
-    sh = { "shfmt" },
-    typescript = { "prettier" },
-    typescriptreact = { "prettier" },
-    vue = { "prettier" },
-    yaml = { "prettier" },
-  },
+	formatters_by_ft = {
+		css = { "prettier" },
+		dockerfile = { "hadolint" },
+		graphql = { "prettier" },
+		handlebars = { "prettier" },
+		html = { "prettier" },
+		javascript = { "prettier" },
+		javascriptreact = { "prettier" },
+		jsonc = { "prettier" },
+		json = { "prettier" },
+		less = { "prettier" },
+		lua = { "stylua" },
+		["markdown.mdx"] = { "prettier" },
+		markdown = { "prettier" },
+		python = { "black", "isort" },
+		scss = { "prettier" },
+		sh = { "shfmt" },
+		typescript = { "prettier" },
+		typescriptreact = { "prettier" },
+		vue = { "prettier" },
+		yaml = { "yamlfmt" },
+	},
+	formatters = {
+		black = {
+			prepend_args = { "--line-length=100" },
+		},
+		isort = {
+			prepend_args = { "--profile", "black" },
+		},
+		shfmt = {
+			prepend_args = { "-i", "2", "-ci" },
+		},
+	},
 }
 
 M.treesitter = {
-  ensure_installed = {
-    "bash",
-    "comment",
-    "csv",
-    "diff",
-    "dockerfile",
-    "git_config",
-    "git_rebase",
-    "gitattributes",
-    "gitcommit",
-    "gitignore",
-    "jq",
-    "json",
-    "markdown",
-    "markdown_inline",
-    "regex",
-    "vim",
-    "xml",
+	ensure_installed = {
+		"bash",
+		"comment",
+		"csv",
+		"diff",
+		"dockerfile",
+		"git_config",
+		"git_rebase",
+		"gitattributes",
+		"gitcommit",
+		"gitignore",
+		"jq",
+		"json",
+		"markdown",
+		"markdown_inline",
+		"regex",
+		"vim",
+		"xml",
+		"yaml",
 
-    "python",
-    "rust",
-    "typescript",
+		"python",
+		"rust",
+		"typescript",
 
-    "css",
-    "html",
-    "javascript",
-  },
+		"css",
+		"html",
+		"javascript",
+	},
 
-  highlight = {
-    enable = true,
-    use_languagetree = true,
-  },
+	highlight = {
+		enable = true,
+		use_languagetree = true,
+	},
 
-  indent = { enable = true },
+	indent = { enable = true },
 }
 
 M.mason = {
-  pkgs = {
-    -- lua
-    "lua-language-server",
-    "stylua",
+	pkgs = {
+    -- docker
+    "docker-langserver",
+    "hadolint",
 
-    -- python
-    "pyright",
-    "black",
+		-- lua
+		"lua-language-server",
+		"stylua",
 
-    -- typescript
-    "typescript-language-server",
-    "prettier",
+		-- python
+		"pyright",
+    "ruff-lsp",
+		"black",
+    "isort",
+    "debugpy",
 
-    -- shell
-    "shfmt",
+		-- typescript
+		"typescript-language-server",
+		"prettier",
 
-    -- web
-    "css-lsp",
-    "html-lsp",
+		-- shell
+    "bash-language-server",
+		"shfmt",
+    "shellcheck",
 
-    -- astro
-    "astro-language-server",
-  },
+		-- web
+		"css-lsp",
+		"html-lsp",
+
+    -- yaml
+    "yaml-language-server",
+    "yamlfmt",
+
+		-- astro
+		"astro-language-server",
+	},
 }
 
 -- git support in nvimtree
 M.nvimtree = {
-  git = {
-    enable = true,
-  },
+	git = {
+		enable = true,
+	},
 
-  renderer = {
-    highlight_git = true,
-    icons = {
-      show = {
-        git = true,
-      },
-    },
-  },
+	renderer = {
+		highlight_git = true,
+		icons = {
+			show = {
+				git = true,
+			},
+		},
+	},
 }
 
 return M

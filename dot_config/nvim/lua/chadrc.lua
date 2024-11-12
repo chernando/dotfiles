@@ -1,24 +1,17 @@
--- This file  needs to have same structure as nvconfig.lua
--- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvconfig.lua
+-- This file needs to have same structure as nvconfig.lua
+-- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
+-- Please read that file to know all available options :(
 
 ---@type ChadrcConfig
 local M = {}
 
-M.ui = {
-  theme = "github_light",
+M.base46 = {
+	theme = "everforest_light",
+	alt_theme = "everforest",
 
-  changed_themes = {
-    github_light = {
-      base_30 = {
-        grey_fg = "#8087a2"
-      },
-    },
-  },
-
-  statusline = {
-    separator_style = "round",
-  },
-
+	statusline = {
+		separator_style = "round",
+	},
 }
 
 return M

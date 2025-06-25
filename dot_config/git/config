@@ -1,8 +1,25 @@
 [branch]
   sort = -committerdate
 
+[column]
+  ui = auto
+
+[commit]
+  verbose = true
+
 [core]
   pager = delta
+
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
+
+[fetch]
+  all = true
+  prune = true
+  pruneTags = true
 
 [gpg]
   format = ssh
@@ -14,14 +31,26 @@
   diffFilter = delta --color-only
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
+
+[rebase]
+  autoSquash = true
+  autoStash = true
+  preserveMerges = true
 
 [rerere]
   autoUpdate = true
   enabled = true
 
+[pull]
+  rebase = true
+
 [push]
   autoSetupRemote = true
+  followTags = true
+
+[tag]
+  sort = version:refname
 
 [user]
   name = Carlos Hernando
@@ -36,5 +65,8 @@
   navigate = true
   true-color = always
 
-[pull]
-	rebase = true
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true

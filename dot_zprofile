@@ -78,3 +78,12 @@ fi
 if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
+
+#
+# Local Configuration
+#
+
+# Load local zprofile configuration if it exists
+if [[ -f "$HOME/.zprofile.local" ]]; then
+  source "$HOME/.zprofile.local"
+fi

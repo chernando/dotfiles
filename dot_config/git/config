@@ -1,0 +1,90 @@
+[branch]
+	sort = -committerdate
+
+[checkout]
+	workers = -1
+
+[column]
+	ui = auto
+
+[commit]
+	verbose = true
+
+[core]
+	commitGraph = true
+	fsmonitor = true
+	pager = delta
+	untrackedCache = true
+
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+
+[feature]
+	manyFiles = true
+
+[fetch]
+	all = true
+	pruneTags = true
+	prune = true
+	writeCommitGraph = true
+
+[gpg]
+	format = ssh
+
+[index]
+	version = 4
+
+[init]
+	defaultBranch = main
+
+[interactive]
+	diffFilter = delta --color-only
+
+[merge]
+	conflictstyle = zdiff3
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+
+[receive] 
+	fsckObjects = true
+
+[rerere]
+	autoUpdate = true
+	enabled = true
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+	followTags = true
+
+[tag]
+	sort = version:refname
+
+[transfer]
+	fsckObjects = true
+
+[user]
+	name = Carlos Hernando
+	email = chernando@users.noreply.github.com
+	signingKey = ~/.ssh/id_ed25519.pub
+
+[include]
+	path = ~/.gitconfig.local
+
+[delta]
+	side-by-side = true
+	navigate = true
+	true-color = always
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,0 +1,47 @@
+[colors]
+# Core UI
+foreground   = "#657b83" # base00
+background   = "#fdf6e3" # base3
+cursor_fg    = "#fdf6e3" # base3
+cursor_bg    = "#657b83" # base00
+selection_fg = "#657b83" # base00
+selection_bg = "#eee8d5" # base2
+
+# Normal ANSI (0-7)
+ansi = [
+  "#073642",  # black   – base02
+  "#dc322f",  # red
+  "#859900",  # green
+  "#b58900",  # yellow
+  "#268bd2",  # blue
+  "#d33682",  # magenta
+  "#2aa198",  # cyan
+  "#eee8d5",  # white   – base2
+]
+
+# Bright ANSI (8-15)
+brights = [
+  "#002b36",  # bright-black  – base03
+  "#cb4b16",  # bright-red
+  "#859900",  # bright-green  (same as normal)
+  "#b58900",  # bright-yellow (same as normal)
+  "#268bd2",  # bright-blue   (same as normal)
+  "#d33682",  # bright-magenta(same as normal)
+  "#2aa198",  # bright-cyan   (same as normal)
+  "#fdf6e3",  # bright-white  – base3
+]
+
+# Tab bar
+tab_bar_background   = "#fdf6e3"   # base3
+active_tab_bg        = "#268bd2"   # blue
+inactive_tab_bg      = "#eee8d5"   # base2
+active_tab_fg        = "#fdf6e3"   # base3
+inactive_tab_fg      = "#657b83"   # base00
+
+# Split panes / scrollbars
+split                = "#93a1a1"   # base1
+scrollbar_thumb      = "#93a1a1"   # base1
+scrollbar_track      = "#eee8d5"   # base2
+
+# Visual bell
+visual_bell          = "#dc322f"

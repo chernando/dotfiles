@@ -1,0 +1,20 @@
+packages:
+  linux:
+    brews:
+      - bat
+      - chezmoi
+      - eza
+      - fd
+      - fish
+      - fzf
+      - git
+      - git-delta
+      - jq
+      - mise
+      - neovim
+      - ripgrep
+      - starship
+      - tealdeer
+      - xh
+      - yq
+      - zoxide

@@ -1,90 +1,90 @@
 [branch]
-	sort = -committerdate
+	sort = -committerdate  # Sort branches by most recent commit first
 
 [checkout]
-	workers = -1
+	workers = -1  # Use all available CPU cores for checkout operations
 
 [column]
-	ui = auto
+	ui = auto  # Enable columnar output when terminal is wide enough
 
 [commit]
-	verbose = true
+	verbose = true  # Show diff in commit message editor
 
 [core]
-	commitGraph = true
-	fsmonitor = true
-	pager = delta
-	untrackedCache = true
+	commitGraph = true  # Enable commit-graph for faster operations
+	fsmonitor = true  # Monitor filesystem for changes to speed up status
+	pager = delta  # Use delta as the default pager for diffs
+	untrackedCache = true  # Cache untracked files for faster status
 
 [diff]
-	algorithm = histogram
-	colorMoved = plain
-	mnemonicPrefix = true
-	renames = true
+	algorithm = histogram  # Use histogram algorithm for better diffs
+	colorMoved = plain  # Highlight moved lines in diffs
+	mnemonicPrefix = true  # Use more descriptive prefixes (i/w/c/o instead of a/b)
+	renames = true  # Detect file renames in diffs
 
 [feature]
-	manyFiles = true
+	manyFiles = true  # Optimize for repositories with many files
 
 [fetch]
-	all = true
-	pruneTags = true
-	prune = true
-	writeCommitGraph = true
+	all = true  # Fetch from all remotes by default
+	pruneTags = true  # Remove local tags that don't exist on remote
+	prune = true  # Remove remote-tracking branches that no longer exist
+	writeCommitGraph = true  # Update commit-graph during fetch
 
 [gpg]
-	format = ssh
+	format = ssh  # Use SSH keys for signing instead of GPG
 
 [index]
-	version = 4
+	version = 4  # Use index format version 4 (supports longer paths)
 
 [init]
-	defaultBranch = main
+	defaultBranch = main  # Use 'main' as default branch name
 
 [interactive]
-	diffFilter = delta --color-only
+	diffFilter = delta --color-only  # Use delta for interactive diffs
 
 [merge]
-	conflictstyle = zdiff3
+	conflictstyle = zdiff3  # Show original, ours, theirs in merge conflicts
 
 [rebase]
-	autoSquash = true
-	autoStash = true
+	autoSquash = true  # Automatically squash fixup! and squash! commits
+	autoStash = true  # Stash changes before rebase, pop after
 
-[receive] 
-	fsckObjects = true
+[receive]
+	fsckObjects = true  # Check objects when receiving pushes
 
 [rerere]
-	autoUpdate = true
-	enabled = true
+	autoUpdate = true  # Update rerere resolution when conflicts change
+	enabled = true  # Remember and reuse merge conflict resolutions
 
 [pull]
-	rebase = true
+	rebase = true  # Rebase instead of merge when pulling
 
 [push]
-	autoSetupRemote = true
-	followTags = true
+	autoSetupRemote = true  # Automatically set up remote tracking
+	followTags = true  # Push annotated tags with commits
 
 [tag]
-	sort = version:refname
+	sort = version:refname  # Sort tags by version number
 
 [transfer]
-	fsckObjects = true
+	fsckObjects = true  # Check objects during push/fetch
 
 [user]
 	name = Carlos Hernando
 	email = chernando@users.noreply.github.com
-	signingKey = ~/.ssh/id_ed25519.pub
-
-[include]
-	path = ~/.gitconfig.local
+	signingKey = ~/.ssh/id_ed25519.pub  # SSH key for commit signing
 
 [delta]
-	side-by-side = true
-	navigate = true
-	true-color = always
+	side-by-side = true  # Show diffs side by side
+	navigate = true  # Enable navigation in delta
+	true-color = always  # Use 24-bit color
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+	clean = git-lfs clean -- %f  # Convert files to LFS pointers when staging
+	smudge = git-lfs smudge -- %f  # Replace LFS pointers with actual file content
+	process = git-lfs filter-process  # Use long-running process via pkt-line protocol
+	required = true  # Fail if LFS is unavailable
+
+[include]
+	path = ~/.gitconfig.local  # Include local Git config overrides

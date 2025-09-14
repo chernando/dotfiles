@@ -1,0 +1,30 @@
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
+-- Initial geometry for new windows:
+config.initial_cols = 160
+
+config.color_scheme = "Solarized - Light"
+
+-- wezterm bundles JetBrains Mono (with Nerd Fonts)
+-- JetBrains Mono recommends these options:
+{{- if eq .chezmoi.os "darwin" }}
+config.font_size = 14.0 -- increased from 13 due to glitch
+{{- else }}
+config.font_size = 13.0
+{{- end }}
+config.line_height = 1.2
+
+{{- if eq .chezmoi.os "darwin" }}
+config.set_environment_variables = {
+	PATH = "/opt/homebrew/bin:" .. (os.getenv("PATH") or "")
+}
+{{- end }}
+
+config.default_prog = { "/usr/bin/env", "fish", "-l" }
+
+config.keys = {
+	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
+}
+
+return config

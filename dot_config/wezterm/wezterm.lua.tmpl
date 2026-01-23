@@ -3,6 +3,7 @@ local config = wezterm.config_builder()
 
 -- Initial geometry for new windows:
 config.initial_cols = 160
+config.initial_rows = 32
 
 config.color_scheme = "Solarized - Light"
 
@@ -21,10 +22,23 @@ config.set_environment_variables = {
 }
 {{- end }}
 
-config.default_prog = { "/usr/bin/env", "fish", "-l" }
+config.default_prog = { "/usr/bin/env", "fish" }
 
 config.keys = {
 	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
+}
+
+config.quit_when_all_windows_are_closed = false
+config.warn_about_missing_glyphs = false
+config.audible_bell = "Disabled"
+config.visual_bell = {
+  fade_in_function = 'EaseIn',
+  fade_in_duration_ms = 150,
+  fade_out_function = 'EaseOut',
+  fade_out_duration_ms = 150,
+}
+config.colors = {
+  visual_bell = '#202020',
 }
 
 return config

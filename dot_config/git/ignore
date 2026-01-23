@@ -89,3 +89,9 @@ mise/*.local.toml
 
 # https://mise.jdx.dev/configuration.html#tool-versions
 #.tool-versions
+
+#
+# Claude Code
+#
+
+**/.claude/settings.local.json

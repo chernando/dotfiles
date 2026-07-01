@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Installs OS-native packages, then realizes the mise tool list. chezmoi re-runs
+# this whenever its rendered content changes — i.e. when the package lists below
+# change — because the lists are templated into the body.
+set -euo pipefail
+
+{{ if eq .chezmoi.os "darwin" -}}
+# ---------- macOS: Homebrew ----------
+if ! command -v brew >/dev/null 2>&1; then
+	echo "Homebrew not found. Install it first: https://brew.sh" >&2
+	exit 1
+fi
+
+# `install --no-upgrade`: ensure-installed only. Upgrades belong to the `update`
+# function, not to `chezmoi apply`. (`--no-lock` was removed from brew bundle.)
+# Wrapped in `if !` so a single failed package warns instead of aborting apply
+# (a failed run_onchange re-runs every apply until it succeeds).
+if ! brew bundle install --no-upgrade --file=/dev/stdin <<'BREWFILE'
+{{ range .packages.darwin.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+BREWFILE
+then
+	echo "brew bundle: some packages failed to install (non-fatal)" >&2
+fi
+
+{{ else if eq .chezmoi.os "linux" -}}
+# ---------- CachyOS / Arch: pacman + paru ----------
+# CachyOS ships paru; bootstrap it if absent (bare Arch) so AUR installs work.
+if ! command -v paru >/dev/null 2>&1; then
+	echo "paru not found; bootstrapping from AUR..."
+	sudo pacman -S --needed --noconfirm base-devel git
+	tmpdir="$(mktemp -d)"
+	git clone https://aur.archlinux.org/paru.git "$tmpdir/paru"
+	( cd "$tmpdir/paru" && makepkg -si --noconfirm )
+	rm -rf "$tmpdir"
+fi
+
+pacman_pkgs=(
+{{ range .packages.linux.pacman -}}
+	{{ . | quote }}
+{{ end -}}
+)
+if [ "${#pacman_pkgs[@]}" -gt 0 ]; then
+	sudo pacman -S --needed --noconfirm "${pacman_pkgs[@]}"
+fi
+
+aur_pkgs=(
+{{ range .packages.linux.aur -}}
+	{{ . | quote }}
+{{ end -}}
+)
+if [ "${#aur_pkgs[@]}" -gt 0 ]; then
+	paru -S --needed --noconfirm "${aur_pkgs[@]}"
+fi
+
+{{ end -}}
+
+# ---------- Both OSes: mise tools + uv-managed Python CLIs ----------
+# mise was installed by the OS bootstrap above. Idempotent — no-op once present.
+if command -v mise >/dev/null 2>&1; then
+	mise install
+	# PDM as a uv-managed tool: its own isolated interpreter, decoupled from the
+	# mise `python` pin so bumping python never breaks the PDM CLI. Idempotent.
+	# Run via `mise exec` so `uv` resolves from the just-installed mise tools.
+	mise exec -- uv tool install pdm
+fi

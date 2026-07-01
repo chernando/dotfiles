@@ -1,0 +1,16 @@
+# Solarized Light
+colors:
+    text:
+        primary: "#657b83"     # base00 — body
+        secondary: "#586e75"   # base01 — headers/emphasis
+        inverted: "#073642"    # base02 — dark text on the light selected row
+        faint: "#93a1a1"       # base1 — dim columns + footer
+        warning: "#b58900"     # solarized yellow — readable on cream
+        success: "#859900"     # solarized green — muted olive
+        actor: "#268bd2"       # solarized blue — @authors
+    background:
+        selected: "#eee8d5"    # base2 — subtle selected-row highlight
+    border:
+        primary: "#93a1a1"
+        secondary: "#586e75"
+        faint: "#eee8d5"

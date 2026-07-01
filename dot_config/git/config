@@ -1,3 +1,7 @@
+[alias]
+	dft = -c diff.external=difft diff  # AST diff
+	dshow = -c diff.external=difft show --ext-diff  # AST diff
+
 [branch]
 	sort = -committerdate  # Sort branches by most recent commit first
 
@@ -9,24 +13,26 @@
 
 [commit]
 	verbose = true  # Show diff in commit message editor
+	gpgsign = true  # Sign every commit (SSH signing configured under [gpg])
 
 [core]
 	commitGraph = true  # Enable commit-graph for faster operations
-	fsmonitor = true  # Monitor filesystem for changes to speed up status
+	fsmonitor = true  # Built-in fsmonitor daemon speeds up status (macOS + Linux as of git 2.55)
 	pager = delta  # Use delta as the default pager for diffs
-	untrackedCache = true  # Cache untracked files for faster status
 
 [diff]
 	algorithm = histogram  # Use histogram algorithm for better diffs
 	colorMoved = plain  # Highlight moved lines in diffs
+	colorMovedWS = allow-indentation-change  # Don't flag reindented moves (common in TS/Python refactors)
 	mnemonicPrefix = true  # Use more descriptive prefixes (i/w/c/o instead of a/b)
 	renames = true  # Detect file renames in diffs
 
 [feature]
-	manyFiles = true  # Optimize for repositories with many files
+	manyFiles = true  # Many-file optimizations; implies index.version=4, index.skipHash, core.untrackedCache
 
 [fetch]
 	all = true  # Fetch from all remotes by default
+	parallel = 0  # Parallelize multi-remote fetches (auto core count) — pairs with fetch.all
 	pruneTags = true  # Remove local tags that don't exist on remote
 	prune = true  # Remove remote-tracking branches that no longer exist
 	writeCommitGraph = true  # Update commit-graph during fetch
@@ -34,8 +40,8 @@
 [gpg]
 	format = ssh  # Use SSH keys for signing instead of GPG
 
-[index]
-	version = 4  # Use index format version 4 (supports longer paths)
+[help]
+	autocorrect = prompt  # On a typo'd subcommand, suggest the match and prompt before running
 
 [init]
 	defaultBranch = main  # Use 'main' as default branch name
@@ -49,6 +55,8 @@
 [rebase]
 	autoSquash = true  # Automatically squash fixup! and squash! commits
 	autoStash = true  # Stash changes before rebase, pop after
+	updateRefs = true  # Keep stacked branches aligned when rebasing their base
+	missingCommitsCheck = error  # Abort if an interactive-rebase todo line is dropped (never lose work)
 
 [receive]
 	fsckObjects = true  # Check objects when receiving pushes
@@ -65,6 +73,7 @@
 	followTags = true  # Push annotated tags with commits
 
 [tag]
+	gpgSign = true  # Sign annotated tags
 	sort = version:refname  # Sort tags by version number
 
 [transfer]

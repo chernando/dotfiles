@@ -20,9 +20,13 @@ ansi = [
 ]
 
 # Bright ANSI (8-15)
+# NOTE: this deliberately keeps the bright hues vivid (== normal) instead of
+# the official Solarized 16-color overload, where brights 10-14 become the
+# monotone base ramp (base01/base00/base0/violet/base1). That overload turns
+# bold text into low-contrast gray, so vivid brights are the saner choice.
 brights = [
   "#002b36",  # bright-black  – base03
-  "#cb4b16",  # bright-red
+  "#cb4b16",  # bright-red    – orange
   "#859900",  # bright-green  (same as normal)
   "#b58900",  # bright-yellow (same as normal)
   "#268bd2",  # bright-blue   (same as normal)
@@ -31,17 +35,34 @@ brights = [
   "#fdf6e3",  # bright-white  – base3
 ]
 
-# Tab bar
-tab_bar_background   = "#fdf6e3"   # base3
-active_tab_bg        = "#268bd2"   # blue
-inactive_tab_bg      = "#eee8d5"   # base2
-active_tab_fg        = "#fdf6e3"   # base3
-inactive_tab_fg      = "#657b83"   # base00
-
-# Split panes / scrollbars
-split                = "#93a1a1"   # base1
-scrollbar_thumb      = "#93a1a1"   # base1
-scrollbar_track      = "#eee8d5"   # base2
+# Split panes / scrollbar
+split           = "#93a1a1"   # base1
+scrollbar_thumb = "#93a1a1"   # base1
 
 # Visual bell
-visual_bell          = "#dc322f"
+visual_bell     = "#dc322f"
+
+# Tab bar (retro). Must be nested under [colors.tab_bar] — flat keys like
+# `active_tab_bg` are silently ignored by wezterm.
+[colors.tab_bar]
+background = "#fdf6e3"   # base3
+
+[colors.tab_bar.active_tab]
+bg_color = "#268bd2"     # blue
+fg_color = "#fdf6e3"     # base3
+
+[colors.tab_bar.inactive_tab]
+bg_color = "#eee8d5"     # base2
+fg_color = "#657b83"     # base00
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = "#eee8d5"     # base2
+fg_color = "#586e75"     # base01
+
+[colors.tab_bar.new_tab]
+bg_color = "#eee8d5"     # base2
+fg_color = "#657b83"     # base00
+
+[colors.tab_bar.new_tab_hover]
+bg_color = "#93a1a1"     # base1
+fg_color = "#fdf6e3"     # base3

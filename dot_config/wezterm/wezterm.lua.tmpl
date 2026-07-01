@@ -1,44 +1,426 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 local config = wezterm.config_builder()
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Base: geometry, font, shell, environment
+-- ════════════════════════════════════════════════════════════════════════
 
 -- Initial geometry for new windows:
 config.initial_cols = 160
 config.initial_rows = 32
 
-config.color_scheme = "Solarized - Light"
-
--- wezterm bundles JetBrains Mono (with Nerd Fonts)
+-- wezterm bundles JetBrains Mono (with Nerd Fonts).
 -- JetBrains Mono recommends these options:
 {{- if eq .chezmoi.os "darwin" }}
-config.font_size = 14.0 -- increased from 13 due to glitch
+config.font_size = 14.0 -- increased from 13 due to a rendering glitch on macOS
 {{- else }}
 config.font_size = 13.0
 {{- end }}
 config.line_height = 1.2
 
+-- wezterm's GUI starts with a minimal PATH; prepend the locations our tools live
+-- in so plugins (zoxide, etc.) and `default_prog` resolve.
 {{- if eq .chezmoi.os "darwin" }}
 config.set_environment_variables = {
-	PATH = "/opt/homebrew/bin:" .. (os.getenv("PATH") or "")
+	PATH = "/opt/homebrew/bin:/usr/local/bin:" .. (os.getenv("PATH") or ""),
+}
+{{- else }}
+config.set_environment_variables = {
+	PATH = (os.getenv("HOME") or "")
+		.. "/.local/share/mise/shims:"
+		.. (os.getenv("HOME") or "")
+		.. "/.local/bin:/usr/bin:"
+		.. (os.getenv("PATH") or ""),
 }
 {{- end }}
 
 config.default_prog = { "/usr/bin/env", "fish" }
 
-config.keys = {
-	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
-}
-
 config.quit_when_all_windows_are_closed = false
 config.warn_about_missing_glyphs = false
 config.audible_bell = "Disabled"
-config.visual_bell = {
-  fade_in_function = 'EaseIn',
-  fade_in_duration_ms = 150,
-  fade_out_function = 'EaseOut',
-  fade_out_duration_ms = 150,
+config.scrollback_lines = 20000
+
+-- Rendering: GPU renderer + ProMotion-friendly frame rate
+config.front_end = "WebGpu"
+config.webgpu_power_preference = "HighPerformance"
+config.max_fps = 120
+config.adjust_window_size_when_changing_font_size = false
+config.unicode_version = 14 -- correct emoji/glyph widths (e.g. the fish greeting)
+
+-- Inside mouse-capturing TUIs (Claude Code, nvim) the app eats the mouse, so a
+-- plain click/drag never reaches WezTerm's link-opener or selection. Holding
+-- this modifier hands the gesture back to WezTerm. Default is SHIFT; CMD is the
+-- macOS-native "click to open a URL" gesture (Terminal.app, iTerm, browsers).
+-- On Linux CMD maps to the Super key.
+config.bypass_mouse_reporting_modifiers = "CMD"
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Theme: Solarized, auto light/dark following the OS appearance
+--  (wezterm reloads + reapplies automatically when the system theme flips)
+-- ════════════════════════════════════════════════════════════════════════
+
+local function scheme_for_appearance(appearance)
+	if appearance:find("Dark") then
+		return "Solarized - Dark"
+	end
+	return "Solarized - Light"
+end
+
+local appearance = wezterm.gui.get_appearance()
+local is_dark = appearance:find("Dark") ~= nil
+config.color_scheme = scheme_for_appearance(appearance)
+
+-- Solarized accents reused in the status bar (work on both light & dark)
+local SOL = {
+	blue = "#268bd2",
+	yellow = "#b58900",
+	green = "#859900",
+	cyan = "#2aa198",
+	orange = "#cb4b16",
+	muted = "#93a1a1", -- base1
 }
+
+-- Force the selection colors here (config.colors overrides the scheme): the
+-- scheme's selection_bg wasn't being applied, leaving an unreadable default.
+-- selection_fg makes selected text uniform instead of keeping faint syntax
+-- colors (e.g. blue links) that vanish into the highlight.
 config.colors = {
-  visual_bell = '#202020',
+	-- Visual-bell flash: Solarized cyan — noticeable but calm (not alarm-red).
+	-- Swap to taste: blue #268bd2, violet #6c71c4, yellow #b58900, or a neutral
+	-- base01 #586e75 for a subtle dim pulse.
+	visual_bell = "#2aa198",
+	selection_bg = is_dark and "#586e75" or "#93a1a1", -- base01 / base1
+	selection_fg = is_dark and "#fdf6e3" or "#002b36", -- base3 / base03
 }
+config.visual_bell = {
+	fade_in_function = "EaseIn",
+	fade_in_duration_ms = 150,
+	fade_out_function = "EaseOut",
+	fade_out_duration_ms = 150,
+}
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Window & panes
+-- ════════════════════════════════════════════════════════════════════════
+
+config.window_padding = { left = 8, right = 8, top = 6, bottom = 4 }
+config.use_fancy_tab_bar = false -- retro bar honors the color-scheme tab_bar colors
+config.hide_tab_bar_if_only_one_tab = true -- stay clean until you actually multiplex
+config.tab_max_width = 40 -- wider so app-set titles (Claude Code task lines) stay legible
+config.inactive_pane_hsb = { saturation = 0.85, brightness = 0.70 } -- dim unfocused panes
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Tab titles: index + (app title | cwd basename) + zoom marker
+--  A plain shell tab shows its dir basename (the project). But when an app
+--  owns the pane — Claude Code, nvim, … — we show the title *it* set instead,
+--  so several Claude Code sessions in the SAME repo read as their distinct
+--  task lines ("Review the auth refactor…") rather than three identical
+--  "backend"s. A manual rename (LEADER r) still wins over both.
+-- ════════════════════════════════════════════════════════════════════════
+
+local function basename(path)
+	if not path or path == "" then
+		return ""
+	end
+	path = path:gsub("/$", "")
+	return path:match("([^/\\]+)$") or path
+end
+
+local function pane_cwd(pane)
+	local uri = pane.current_working_dir
+	if uri == nil then
+		return ""
+	end
+	-- 20240203 returns a Url object; older returns a string. Handle both.
+	if type(uri) == "string" then
+		return basename((uri:gsub("^file://[^/]*", "")))
+	end
+	return basename(uri.file_path or uri.path or "")
+end
+
+-- Foreground procs we treat as "just a shell" → prefer the cwd basename.
+-- Anything else (node/claude, nvim, …) is an app that owns the title bar.
+local SHELLS = {
+	fish = true,
+	zsh = true,
+	bash = true,
+	sh = true,
+	dash = true,
+	nu = true,
+	xonsh = true,
+}
+
+local function is_shell(procname)
+	return SHELLS[basename(procname or ""):lower()] == true
+end
+
+-- Claude prefixes its own title with a status glyph: a rotating Braille
+-- spinner (U+2800-U+28FF block — any frame, since the exact character wanders
+-- between versions) while a turn is in flight, or a static "✳" once it
+-- settles and is waiting on you. Drop Claude's leading "[N/M]" session-count
+-- group (redundant with the tab index we print) and that status glyph — we
+-- show our own badge instead (see claude_badge below), so the raw glyph
+-- shouldn't also show up baked into the label text.
+local function clean_title(t)
+	if not t then
+		return ""
+	end
+	t = t:gsub("^%s+", ""):gsub("%s+$", "")
+	t = t:gsub("^%b[]%s*", "")
+	t = t:gsub("^\xE2\x9C\xB3%s*", "") -- drop Claude's static "✳" idle marker
+	t = t:gsub("^\xE2[\xA0-\xA3][\x80-\xBF]%s*", "") -- drop Claude's Braille spinner glyph
+	return t
+end
+
+-- Busy / ready badge for Claude tabs. Read directly off the glyph Claude puts
+-- at the front of its own title (see clean_title above) instead of inferring
+-- busy-ness from "did the title change recently" — that heuristic misfires
+-- whenever a background tab goes a few ticks without a forced repaint (e.g.
+-- mid-tool-call, or simply while unfocused), showing stale READY until you
+-- focus the tab and force one. This way there's no per-pane state to track
+-- and no timing to get out of sync. Only tabs running `claude` get a badge.
+local WORKING, READY = "🟡", "🟢"
+
+local function claude_badge(pane)
+	if basename(pane.foreground_process_name or "") ~= "claude" then
+		return nil
+	end
+	local title = (pane.title or ""):gsub("^%b[]%s*", "")
+	if title:find("^\xE2[\xA0-\xA3][\x80-\xBF]") then
+		return WORKING
+	end
+	return READY
+end
+
+wezterm.on("format-tab-title", function(tab, _tabs, _panes, _cfg, _hover, max_width)
+	local pane = tab.active_pane
+	local title = tab.tab_title -- explicit LEADER-r rename always wins
+	if not title or #title == 0 then
+		if is_shell(pane.foreground_process_name) then
+			title = pane_cwd(pane)
+		else
+			title = clean_title(pane.title)
+		end
+		if title == "" then -- last-resort fallbacks
+			title = pane_cwd(pane)
+			if title == "" then
+				title = basename(pane.title)
+			end
+		end
+	end
+	local zoom = pane.is_zoomed and " " or ""
+	-- Density: keep the focused tab roomy, compact the rest — the bar reads as
+	-- one clear "current task" flanked by quiet neighbors, not a wall of text.
+	local cap = tab.is_active and max_width or 20
+	local label = string.format(" %d:%s%s ", tab.tab_index + 1, title, zoom)
+	if #label > cap then
+		label = wezterm.truncate_right(label, cap - 1) .. "…"
+	end
+	-- A thin divider before every tab but the first gives the bar some air.
+	local items = {}
+	if tab.tab_index > 0 then
+		table.insert(items, { Foreground = { Color = SOL.muted } })
+		table.insert(items, { Text = "│" })
+	end
+	local badge = claude_badge(pane)
+	if badge then
+		table.insert(items, { Text = " " .. badge })
+	end
+	table.insert(items, "ResetAttributes")
+	table.insert(items, { Text = label })
+	return items
+end)
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Right status: LEADER indicator + workspace + clock
+-- ════════════════════════════════════════════════════════════════════════
+
+wezterm.on("update-right-status", function(window, _pane)
+	local cells = {}
+	if window:leader_is_active() then
+		table.insert(cells, { Foreground = { Color = SOL.orange } })
+		table.insert(cells, { Text = " ☰ LEADER " })
+	end
+	table.insert(cells, { Foreground = { Color = SOL.blue } })
+	table.insert(cells, { Text = "  " .. window:active_workspace() .. " " })
+	table.insert(cells, { Foreground = { Color = SOL.muted } })
+	table.insert(cells, { Text = " " .. wezterm.strftime("%H:%M") .. " " })
+	window:set_right_status(wezterm.format(cells))
+end)
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Worktree picker  (LEADER w)
+--  Enumerates every registered git worktree under ~/Src — including the
+--  sibling `<repo>-<ticket>` dirs and `.claude/worktrees/*` agent trees —
+--  and opens the chosen one in a new tab pinned to its basename.
+-- ════════════════════════════════════════════════════════════════════════
+
+local function list_worktrees()
+	local home = os.getenv("HOME") or ""
+	-- Enumerate top-level repos via glob (matches both a `.git` dir for a normal
+	-- repo and a `.git` file for a linked worktree), then ask each for its
+	-- worktree list. `git worktree list` reports every sibling, so different
+	-- repos can surface the same path — dedupe through a Lua set. Pure Lua: no
+	-- shell, no login-shell sourcing, no awk/sort subprocesses.
+	local seen = {}
+	local choices = {}
+	-- gsub-escape the prefixes once so a literal `-` in $HOME can't act as a
+	-- pattern range when we strip them off below.
+	local src_prefix = "^" .. (home .. "/Src/"):gsub("[%-%.%+%[%]%(%)%$%^%%%?%*]", "%%%1")
+	local home_prefix = "^" .. (home .. "/"):gsub("[%-%.%+%[%]%(%)%$%^%%%?%*]", "%%%1")
+	for _, gitpath in ipairs(wezterm.glob(home .. "/Src/*/.git")) do
+		local dir = gitpath:gsub("/%.git$", "")
+		local ok, stdout = wezterm.run_child_process({ "git", "-C", dir, "worktree", "list", "--porcelain" })
+		if ok and stdout then
+			for path in stdout:gmatch("worktree ([^\n]+)") do
+				if not seen[path] then
+					seen[path] = true
+					local label = path:gsub(src_prefix, ""):gsub(home_prefix, "~/")
+					table.insert(choices, { id = path, label = label })
+				end
+			end
+		end
+	end
+	return choices
+end
+
+wezterm.on("worktree-picker", function(window, pane)
+	local choices = list_worktrees()
+	if #choices == 0 then
+		window:toast_notification("wezterm", "No git worktrees found under ~/Src", nil, 4000)
+		return
+	end
+	window:perform_action(
+		act.InputSelector({
+			title = "Open worktree",
+			fuzzy = true,
+			fuzzy_description = "worktree > ",
+			choices = choices,
+			action = wezterm.action_callback(function(win, p, id, label)
+				if not id then
+					return
+				end
+				win:perform_action(
+					act.SpawnCommandInNewTab({ cwd = id, args = { "/usr/bin/env", "fish" } }),
+					p
+				)
+			end),
+		}),
+		pane
+	)
+end)
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Hyperlinks & QuickSelect
+-- ════════════════════════════════════════════════════════════════════════
+
+-- QuickSelect (LEADER Space): keyboard-copy these without reaching for the mouse.
+-- Augments wezterm's built-in patterns (URLs, paths, …).
+config.quick_select_patterns = {
+	"[0-9a-f]{7,40}", -- git SHAs
+	"[A-Z]{2,6}-[0-9]+", -- Linear ticket IDs
+}
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Keybindings
+--  LEADER = Ctrl+Space. Chosen over Ctrl+a (which shadows fish's
+--  beginning-of-line) and over scattered Cmd chords: one prefix is the
+--  smallest thing to learn coming from no multiplexer at all.
+--  Caveat: if you run multiple macOS input sources, Ctrl+Space may be bound
+--  to "select previous input source" (System Settings → Keyboard →
+--  Keyboard Shortcuts → Input Sources). Disable it there, or change below.
+-- ════════════════════════════════════════════════════════════════════════
+
+config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
+
+config.keys = {
+	-- Claude Code: insert a newline instead of submitting
+	{ key = "Enter", mods = "SHIFT", action = act.SendString("\x1b\r") },
+
+	-- Splits  (| = side-by-side, - = stacked)
+	{ key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
+	-- Pane navigation (vim keys)
+	{ key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+	{ key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+	{ key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+	{ key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+
+	-- Pane resize (shifted vim keys)
+	{ key = "H", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Left", 5 }) },
+	{ key = "J", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Down", 5 }) },
+	{ key = "K", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Up", 5 }) },
+	{ key = "L", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Right", 5 }) },
+
+	-- Pane lifecycle
+	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
+	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
+
+	-- Tabs
+	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
+	{ key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
+	{
+		key = "r",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = "Rename tab:",
+			action = wezterm.action_callback(function(window, _pane, line)
+				if line and #line > 0 then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
+	},
+
+	-- Worktrees & workspaces (the headline verbs)
+	{ key = "w", mods = "LEADER", action = act.EmitEvent("worktree-picker") },
+	{ key = "f", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+
+	-- Copy mode / quick select / search
+	{ key = "[", mods = "LEADER", action = act.ActivateCopyMode },
+	{ key = "Space", mods = "LEADER", action = act.QuickSelect },
+	{ key = "/", mods = "LEADER", action = act.Search({ CaseInSensitiveString = "" }) },
+}
+
+-- LEADER 1-9 → jump to tab N.
+-- Redundant with wezterm's built-in CMD+1-9 (macOS) and CTRL+SHIFT+1-9 (all
+-- platforms), but kept so tab-jumping lives under the same LEADER prefix as
+-- every other multiplexing verb. Drop this loop to rely on the built-ins.
+for i = 1, 9 do
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "LEADER",
+		action = act.ActivateTab(i - 1),
+	})
+end
+
+-- ════════════════════════════════════════════════════════════════════════
+--  Plugin: smart_workspace_switcher (zoxide-powered workspace jumper)
+--    LEADER s → fuzzy-pick a zoxide dir, open/switch to a workspace for it
+--    LEADER S → jump back to the previous workspace
+--  pcall-guarded: a failed clone (offline first launch) leaves the rest of
+--  the config intact instead of erroring out the whole terminal.
+-- ════════════════════════════════════════════════════════════════════════
+local ok_ws, workspace_switcher =
+	pcall(wezterm.plugin.require, "https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+if ok_ws then
+	-- wezterm's GUI starts with a minimal PATH, so point at zoxide explicitly.
+{{- if eq .chezmoi.os "darwin" }}
+	workspace_switcher.zoxide_path = "/opt/homebrew/bin/zoxide"
+{{- else }}
+	workspace_switcher.zoxide_path = "zoxide" -- resolved via the PATH set above
+{{- end }}
+	table.insert(config.keys, { key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() })
+	table.insert(
+		config.keys,
+		{ key = "s", mods = "LEADER|SHIFT", action = workspace_switcher.switch_to_prev_workspace() }
+	)
+else
+	wezterm.log_error("smart_workspace_switcher failed to load: " .. tostring(workspace_switcher))
+end
 
 return config

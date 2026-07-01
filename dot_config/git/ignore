@@ -1,5 +1,5 @@
 #
-# https://raw.githubusercontent.com/github/gitignore/master/Global/Linux.gitignore
+# https://raw.githubusercontent.com/github/gitignore/main/Global/Linux.gitignore
 #
 
 *~
@@ -20,11 +20,12 @@
 nohup.out
 
 #
-# https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore 
+# https://raw.githubusercontent.com/github/gitignore/main/Global/macOS.gitignore
 #
 
 # General
 .DS_Store
+.localized
 __MACOSX/
 .AppleDouble
 .LSOverride
@@ -41,6 +42,14 @@ Icon[]
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+.com.apple.timemachine.supported
+.PKInstallSandboxManager
+.PKInstallSandboxManager-SystemSoftware
+.hotfiles.btree
+.vol
+.file
+.disk_label*
+lost+found
 
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -48,9 +57,12 @@ Icon[]
 Network Trash Folder
 Temporary Items
 .apdisk
+Backups.backupdb
+.MobileBackups
+.MobileBackups.trash
 
 #
-# https://raw.githubusercontent.com/github/gitignore/master/Global/Vim.gitignore
+# https://raw.githubusercontent.com/github/gitignore/main/Global/Vim.gitignore
 #
 
 # Swap
@@ -75,7 +87,7 @@ tags
 [._]*.un~
 
 #
-# https://raw.githubusercontent.com/github/gitignore/master/Global/mise.gitignore
+# https://raw.githubusercontent.com/github/gitignore/main/Global/mise.gitignore
 #
 
 # https://mise.jdx.dev/configuration.html

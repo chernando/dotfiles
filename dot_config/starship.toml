@@ -1,0 +1,7 @@
+command_timeout = 1000
+
+[aws]
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+
+[gcloud]
+disabled = true

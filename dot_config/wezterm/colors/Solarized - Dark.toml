@@ -1,0 +1,64 @@
+[colors]
+# Core UI — official Solarized dark pointers (fg=base0, bg=base03)
+foreground   = "#839496" # base0
+background   = "#002b36" # base03
+cursor_fg    = "#002b36" # base03
+cursor_bg    = "#839496" # base0
+selection_fg = "#93a1a1" # base1
+selection_bg = "#073642" # base02
+
+# Normal ANSI (0-7) — identical hues to the light scheme
+ansi = [
+  "#073642",  # black   – base02
+  "#dc322f",  # red
+  "#859900",  # green
+  "#b58900",  # yellow
+  "#268bd2",  # blue
+  "#d33682",  # magenta
+  "#2aa198",  # cyan
+  "#eee8d5",  # white   – base2
+]
+
+# Bright ANSI (8-15) — vivid brights, mirroring the light scheme's choice.
+# bright-black is base01 (not base03) so it stays visible on the dark bg.
+brights = [
+  "#586e75",  # bright-black  – base01 (visible on dark)
+  "#cb4b16",  # bright-red    – orange
+  "#859900",  # bright-green  (same as normal)
+  "#b58900",  # bright-yellow (same as normal)
+  "#268bd2",  # bright-blue   (same as normal)
+  "#d33682",  # bright-magenta(same as normal)
+  "#2aa198",  # bright-cyan   (same as normal)
+  "#fdf6e3",  # bright-white  – base3
+]
+
+# Split panes / scrollbar
+split           = "#586e75"   # base01
+scrollbar_thumb = "#586e75"   # base01
+
+# Visual bell
+visual_bell     = "#dc322f"
+
+# Tab bar (retro)
+[colors.tab_bar]
+background = "#002b36"   # base03
+
+[colors.tab_bar.active_tab]
+bg_color = "#268bd2"     # blue
+fg_color = "#fdf6e3"     # base3
+
+[colors.tab_bar.inactive_tab]
+bg_color = "#073642"     # base02
+fg_color = "#839496"     # base0
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = "#073642"     # base02
+fg_color = "#93a1a1"     # base1
+
+[colors.tab_bar.new_tab]
+bg_color = "#073642"     # base02
+fg_color = "#839496"     # base0
+
+[colors.tab_bar.new_tab_hover]
+bg_color = "#586e75"     # base01
+fg_color = "#fdf6e3"     # base3

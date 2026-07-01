@@ -1,3 +1,7 @@
+# Editor
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+
 if status is-interactive
 	starship init fish | source
 

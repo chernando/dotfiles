@@ -1,0 +1,17 @@
+# GitHub Linguist — accurate language detection for a chezmoi dotfiles repo.
+# Without these, the `.tmpl` extension and chezmoi's `dot_`/`private_` prefixes
+# confuse Linguist and the repo's language bar is wrong.
+
+# chezmoi templates: declare the real language behind `.tmpl`.
+dot_config/wezterm/*.lua.tmpl  linguist-language=Lua
+dot_config/mise/*.toml.tmpl    linguist-language=TOML
+*.sh.tmpl                      linguist-language=Shell
+
+# fish functions / conf.d / config (Linguist knows .fish, but be explicit).
+*.fish                         linguist-language=fish
+
+# Keep prose out of the language stats.
+*.md                           linguist-documentation
+
+# Normalize line endings (LF) so renders are byte-stable across macOS/Linux/CI.
+* text=auto eol=lf

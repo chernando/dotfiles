@@ -1,0 +1,45 @@
+[tools]
+# --- Language runtimes ---
+node = "24"
+python = "3.13"
+pnpm = "10"
+uv = "latest"
+
+# --- LSP servers for Claude Code's code intelligence ---
+"npm:typescript-language-server" = "latest"
+"npm:typescript" = "latest"
+"npm:pyright" = "latest"
+
+# --- Cross-platform CLI tools ---
+"aqua:BurntSushi/ripgrep" = "latest"
+"aqua:charmbracelet/glow" = "latest"
+"aqua:cli/cli" = "latest"
+"aqua:dandavison/delta" = "latest"
+"aqua:ducaale/xh" = "latest"
+"aqua:eth-p/bat-extras" = "latest"
+"aqua:jqlang/jq" = "latest"
+"aqua:lsd-rs/lsd" = "latest"
+"aqua:mikefarah/yq" = "latest"
+"aqua:nektos/act" = "latest"
+"aqua:rhysd/actionlint" = "latest"
+"aqua:sharkdp/bat" = "latest"
+"aqua:sharkdp/fd" = "latest"
+"aqua:tldr-pages/tlrc" = "latest"
+"aqua:Wilfred/difftastic" = "latest"
+{{- if eq .chezmoi.os "linux" }}
+"aqua:eza-community/eza" = "latest"
+{{- end }}
+
+# --- New tools to consider ---
+"aqua:ast-grep/ast-grep" = "latest"         # structural code search/rewrite (TS/Python)
+"aqua:bootandy/dust" = "latest"             # du replacement
+"aqua:jesseduffield/lazygit" = "latest"     # git TUI (worktree + rebase/autosquash)
+"aqua:johnkerl/miller" = "latest"           # mlr: CSV/TSV/JSON stream processing
+"aqua:PaulJuliusMartinez/jless" = "latest"  # TUI JSON viewer
+"aqua:sharkdp/hyperfine" = "latest"         # statistical CLI benchmarking
+"aqua:stern/stern" = "latest"               # multi-stream log tailing w/ regex
+"aqua:tomnomnom/gron" = "latest"            # greppable JSON: `gron`/`gron -u`
+"aqua:TomWright/dasel" = "latest"           # one selector over JSON/YAML/TOML/CSV
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "python"]

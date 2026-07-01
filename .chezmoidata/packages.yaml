@@ -1,20 +1,38 @@
+# OS-native packages only: bootstrap, prompt-critical tools, GUI, and the one
+# tool whose mise/aqua backend doesn't cover macOS (eza). Every other CLI tool
+# and all language runtimes are owned by mise — see dot_config/mise/config.toml.tmpl.
+# Do NOT duplicate mise-managed tools here.
 packages:
-  linux:
+  darwin:
     brews:
-      - bat
+      # Bootstrap / shell
       - chezmoi
-      - eza
-      - fd
       - fish
-      - fzf
       - git
-      - git-delta
-      - jq
+      - git-lfs
       - mise
-      - neovim
-      - ripgrep
+      # Prompt-critical: kept off mise so the prompt never depends on it
       - starship
-      - tealdeer
-      - xh
-      - yq
+      - fzf
       - zoxide
+      # eza: aqua backend is Linux-only in the mise registry; brew avoids a cargo compile
+      - eza
+    casks:
+      - wezterm
+
+  linux:
+    # Official repos (CachyOS optimized + Arch extra) via pacman.
+    pacman:
+      - chezmoi
+      - fish
+      - git
+      - git-lfs
+      - mise
+      - starship
+      - fzf
+      - zoxide
+      - wezterm
+      - ttf-jetbrains-mono-nerd
+    # AUR via paru. Empty by default — move wezterm/font here if not in the repos
+    # at install time (e.g. wezterm-git).
+    aur: []

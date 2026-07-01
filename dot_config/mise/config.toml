@@ -1,7 +1,0 @@
-[tools]
-node = "22"
-python = "3.12"
-"npm:@anthropic-ai/claude-code" = "latest"
-
-[settings]
-idiomatic_version_file_enable_tools = ["node", "python"]

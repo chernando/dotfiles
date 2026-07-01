@@ -1,0 +1,49 @@
+# prSections below approximates GitHub's own "Pull requests" inbox view.
+prSections:
+    - title: Needs your review
+      filters: is:open review-requested:@me
+    - title: Your drafts
+      filters: is:open is:draft author:@me
+    - title: Waiting for review
+      filters: is:open draft:false author:@me review:required
+    - title: Needs action
+      filters: is:open draft:false author:@me review:changes_requested
+    - title: Approved
+      filters: is:open draft:false author:@me review:approved
+#
+# Maps repo names to local clone paths so keybinding commands can use {{.RepoPath}}
+# instead of guessing `~/Src/$(basename ...)` in the shell (that guess silently breaks
+# for worktrees / repos not cloned under their exact repo-name folder).
+repoPaths:
+    invofox/*: ~/Src/*
+keybindings:
+    prs:
+        - key: D
+          # Structural (AST / tree-sitter) diff of the PR via difftastic — no checkout, no branch switch.
+          # Fetches the PR head into FETCH_HEAD and runs the `git dft` alias against the base, reading
+          # blobs from git's object store so the working tree is untouched. `q` returns to the dashboard.
+          command: 'cd {{.RepoPath}} && git fetch -q origin pull/{{.PrNumber}}/head && git dft "origin/{{.BaseRefName}}...FETCH_HEAD"'
+#
+# theme.colors is the Solarized ricing (light-palette fallback for a plain
+# `gh dash`). The `gd` fish function swaps in the per-mode palette
+# (colors-light.yml / colors-dark.yml) so the dashboard follows the OS
+# light/dark appearance — gh-dash collapses any explicit color into a static
+# value, so this external swap is what restores auto-switching.
+theme:
+    colors:
+        text:
+            primary: "#657b83"     # base00 — body
+            secondary: "#586e75"   # base01 — headers/emphasis
+            inverted: "#073642"    # base02 — dark text on the light selected row
+            faint: "#93a1a1"       # base1 — dim columns + footer
+            warning: "#b58900"     # solarized yellow — readable on cream (was washed out)
+            success: "#859900"     # solarized green — muted olive (was glaring bright)
+            actor: "#268bd2"       # solarized blue — @authors
+        background:
+            selected: "#eee8d5"    # base2 — subtle selected-row highlight
+        border:
+            primary: "#93a1a1"
+            secondary: "#586e75"
+            faint: "#eee8d5"
+pager:
+    diff: "delta"
